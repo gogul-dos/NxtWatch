@@ -1,11 +1,11 @@
+import {Redirect, Route, Switch} from 'react-router-dom'
 import Login from './components/Login'
 import './App.css'
 
-// Replace your code here
 const App = () => (
-  <div>
+  <Switch>
     <Login />
-  </div>
+  </Switch>
 )
 
 export default App
