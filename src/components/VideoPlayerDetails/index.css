@@ -1,0 +1,39 @@
+.video-parameters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.thumbs-button {
+  background-color: transparent;
+  outline: none;
+  border-width: 0;
+  display: flex;
+  align-items: center;
+}
+.icon-styles {
+  height: 15px;
+  width: 15px;
+}
+.video-response-container {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+.channel-details-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.channel-sub-details {
+  margin-left: 15px;
+}
+.savedButton {
+  color: #3b82f6;
+}
+.save-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

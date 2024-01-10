@@ -5,6 +5,8 @@ const ThemeContext = React.createContext({
   activeBLock: 1,
   blockChanged: () => {},
   changeTheme: () => {},
+  savedVideos: [],
+  saveToVideos: () => {},
 })
 
 export default ThemeContext

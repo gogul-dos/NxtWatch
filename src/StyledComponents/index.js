@@ -32,7 +32,7 @@ export const StyledNavbarButtonLogout = styled.button`
   padding: 10px;
 `
 export const StyledHomeMainContainer = styled.div`
-  background-color: ${props => (props.backGroundColor ? '#181818' : '#f9f9f9')};
+  background-color: ${props => (props.backGroundColor ? '#0f0f0f' : '#f9f9f9')};
 
   min-height: 100vh;
   max-height: 100%;
@@ -61,4 +61,24 @@ export const StyledHomeRightContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+`
+
+export const StyledLoginButton = styled.button`
+  color: '#ffffff';
+`
+export const LikeButton = styled.button`
+  color: ${props => (props.fontColor ? '#2563eb' : '#64748b')};
+`
+export const StyledHomeMainContainerForHome = styled.div`
+  background-color: ${props => (props.backGroundColor ? '#181818' : '#f9f9f9')};
+
+  min-height: 100vh;
+  max-height: 100%;
+`
+export const StyledBannerContainer = styled.div`
+  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
+  background-size: cover;
+  width: 100%;
+  padding: 20px;
+  height: 300px;
 `

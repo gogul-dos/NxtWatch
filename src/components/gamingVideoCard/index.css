@@ -1,0 +1,12 @@
+.gaming-image {
+  width: 100%;
+  height: auto;
+}
+.gaming-list-item {
+  text-decoration: none;
+  margin: 20px;
+  width: 25%;
+}
+.gaming-details-container {
+  padding: 25px;
+}

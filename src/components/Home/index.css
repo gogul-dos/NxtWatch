@@ -74,3 +74,22 @@
   justify-content: center;
   align-items: center;
 }
+.nothing-found-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.close-banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.banner-close-button {
+  background-color: transparent;
+  border-width: 0;
+  outline: 0;
+  height: 30px;
+  width: 30px;
+  align-items: flex-start;
+}

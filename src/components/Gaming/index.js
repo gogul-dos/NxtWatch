@@ -1,18 +1,18 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {FaFire} from 'react-icons/fa'
-import TrendingVideoCard from '../TrendingVideoCard'
+import {SiYoutubegaming} from 'react-icons/si'
+import ThemeContext from '../ReactContexts'
+import {
+  StyledHomeMainContainer,
+  StyledHomeLeftContainer,
+} from '../../StyledComponents'
 import Header from '../Header'
 import Blocks from '../Blocks'
-import {
-  StyledHomeLeftContainer,
-  StyledHomeMainContainer,
-} from '../../StyledComponents'
-import ThemeContext from '../ReactContexts'
+import GamingVideoCard from '../gamingVideoCard'
 import './index.css'
 
-class Trending extends Component {
+class Gaming extends Component {
   requestStatus = {
     progress: 'IN_PROGRESS',
     success: 'SUCCESS',
@@ -25,12 +25,12 @@ class Trending extends Component {
   }
 
   componentDidMount() {
-    this.getResults()
+    this.getResultsInGaming()
   }
 
-  getResults = async () => {
+  getResultsInGaming = async () => {
     this.setState({urlStatus: this.requestStatus.progress})
-    const url = `https://apis.ccbp.in/videos/trending`
+    const url = ` https://apis.ccbp.in/videos/gaming`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       method: 'GET',
@@ -57,11 +57,10 @@ class Trending extends Component {
     }
   }
 
-  retryButtonClicked = () => [this.getResults()]
+  retryButtonClickedInGaming = () => [this.getResultsInGaming()]
 
   getCurrentView = activeTheme => {
     const {urlStatus, searchResults} = this.state
-    console.log(searchResults)
     let color
     let isDark
     let backGroundColor
@@ -89,13 +88,11 @@ class Trending extends Component {
           <div style={{color}} className="failure-container">
             <img src={imageUrl} className="failure-image" alt="failure view" />
             <h1>Oops! Something Went Wrong</h1>
-            <p>
-              We are having some trouble to complete your request. Please try
-              again.
-            </p>
+            <p>We are having some trouble</p>
             <button
               onClick={this.retryButtonClicked}
               type="button"
+              data-testid="Retry"
               className="retry-button"
             >
               Retry
@@ -111,14 +108,14 @@ class Trending extends Component {
                   className="icon-container"
                   style={{backgroundColor: backGroundColor}}
                 >
-                  <FaFire color="red" height="25px" width="25px" />
+                  <SiYoutubegaming color="red" height="25px" width="25px" />
                 </div>
-                <h1 style={{color}}>Trending</h1>
+                <h1 style={{color}}>Gaming</h1>
               </div>
             </div>
-            <ul className="unordered-list-container-for-trending">
+            <ul className="unordered-list-container-for-videos">
               {searchResults.map(eachItem => (
-                <TrendingVideoCard key={eachItem.id} details={eachItem} />
+                <GamingVideoCard key={eachItem.id} details={eachItem} />
               ))}
             </ul>
           </>
@@ -135,17 +132,18 @@ class Trending extends Component {
           const {activeTheme} = value
           return (
             <StyledHomeMainContainer
-              data-testid="trending"
+              data-testid="gaming"
               backGroundColor={activeTheme === 'Dark'}
             >
               <Header />
-              <div className="trending-main-container">
+              <div className="main-gaming-container">
                 <StyledHomeLeftContainer
                   backGroundColor={activeTheme === 'Dark'}
+                  className="home-left-container"
                 >
                   <Blocks />
                 </StyledHomeLeftContainer>
-                <div className="main-content-container">
+                <div className="gaming-content-container">
                   {this.getCurrentView(activeTheme)}
                 </div>
               </div>
@@ -156,5 +154,4 @@ class Trending extends Component {
     )
   }
 }
-
-export default Trending
+export default Gaming

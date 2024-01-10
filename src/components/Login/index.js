@@ -5,6 +5,7 @@ import ThemeContext from '../ReactContexts'
 import {
   StyledLoginMainComponent,
   StyledLoginSubComponent,
+  StyledLoginButton,
 } from '../../StyledComponents'
 import './index.css'
 
@@ -111,9 +112,9 @@ class Login extends Component {
                       Show Password
                     </label>
                   </div>
-                  <button type="submit" className="login-button">
+                  <StyledLoginButton type="submit" className="login-button">
                     Login
-                  </button>
+                  </StyledLoginButton>
                   {showErrorMessage && <p>{errorMessage}</p>}
                 </form>
               </StyledLoginSubComponent>

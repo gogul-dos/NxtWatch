@@ -1,4 +1,6 @@
 import {withRouter, Link} from 'react-router-dom'
+import Cookies from 'js-cookie'
+import Popup from 'reactjs-popup'
 import {IoMoon, IoSunnyOutline} from 'react-icons/io5'
 import ThemeContext from '../ReactContexts'
 import {
@@ -9,6 +11,11 @@ import './index.css'
 
 const Header = props => {
   const {history} = props
+
+  const logoutButtonClicked = () => {
+    Cookies.remove('jwt_token')
+    history.replace('/login')
+  }
 
   return (
     <ThemeContext.Consumer>
@@ -62,13 +69,42 @@ const Header = props => {
                 />
               </li>
               <li className="for-margin">
-                <StyledNavbarButtonLogout
-                  color={activeTheme}
-                  type="button"
-                  label="logout"
+                <Popup
+                  modal
+                  trigger={
+                    <StyledNavbarButtonLogout
+                      color={activeTheme}
+                      type="button"
+                      label="logout"
+                    >
+                      Logout
+                    </StyledNavbarButtonLogout>
+                  }
                 >
-                  Logout
-                </StyledNavbarButtonLogout>
+                  {close => (
+                    <>
+                      <div className="popup-container">
+                        <p>Are you sure, you want to logout</p>
+                        <div className="logout-permission">
+                          <button
+                            type="button"
+                            className="close-button"
+                            onClick={() => close()}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={logoutButtonClicked}
+                            type="button"
+                            className="logout-button"
+                          >
+                            Confirm
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Popup>
               </li>
             </ul>
           </StyledNavbarContainer>
@@ -79,3 +115,18 @@ const Header = props => {
 }
 
 export default withRouter(Header)
+
+/*
+<div className="popup-container">
+   <Popup
+     modal
+     trigger={
+       <button type="button" className="trigger-button">
+         Trigger
+       </button>
+     }
+   >
+     
+     
+   </Popup>
+ </div> */

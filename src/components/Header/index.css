@@ -22,3 +22,29 @@
   background-color: transparent;
   outline: none;
 }
+.logout-button {
+  background-color: #3b82f6;
+  border-width: 0;
+  padding: 8px;
+  border-radius: 10px;
+  color: #ffffff;
+}
+.close-button {
+  background-color: #ffffff;
+  color: #000000;
+  border-width: 0;
+  padding: 8px;
+  border-radius: 10px;
+}
+.popup-container {
+  background-color: #0f0f0f;
+  color: #ffffff;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+.logout-permission {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

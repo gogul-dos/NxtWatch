@@ -1,13 +1,14 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
+import {IoIosClose} from 'react-icons/io'
 import {FaSearch} from 'react-icons/fa'
 import ThemeContext from '../ReactContexts'
 import {
-  StyledHomeMainContainer,
+  StyledHomeMainContainerForHome,
   StyledHomeLeftContainer,
   StyledHomeRightContainer,
+  StyledBannerContainer,
 } from '../../StyledComponents'
 import Header from '../Header'
 import Blocks from '../Blocks'
@@ -25,13 +26,14 @@ class Home extends Component {
     searchInput: '',
     searchResults: [],
     urlStatus: this.requestStatus.progress,
+    shouldShowBanner: true,
   }
 
   componentDidMount() {
-    this.getResults()
+    this.getResultsInHome()
   }
 
-  getResults = async () => {
+  getResultsInHome = async () => {
     this.setState({urlStatus: this.requestStatus.progress})
     const {searchInput} = this.state
     const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
@@ -66,10 +68,10 @@ class Home extends Component {
   }
 
   searchButtonClicked = () => {
-    this.getResults()
+    this.getResultsInHome()
   }
 
-  retryButtonClicked = () => [this.getResults()]
+  retryButtonClicked = () => [this.getResultsInHome()]
 
   getCurrentView = activeTheme => {
     const {urlStatus, searchResults} = this.state
@@ -98,7 +100,10 @@ class Home extends Component {
           <div style={{color}} className="failure-container">
             <img src={imageUrl} className="failure-image" alt="failure view" />
             <h1>Oops! Something Went Wrong</h1>
-            <p>We are having some trouble</p>
+            <p>
+              We are having some trouble to complete your request. Please try
+              again.
+            </p>
             <button
               onClick={this.retryButtonClicked}
               type="button"
@@ -109,6 +114,26 @@ class Home extends Component {
           </div>
         )
       case this.requestStatus.success:
+        if (searchResults.length === 0) {
+          return (
+            <div className="nothing-found-container">
+              <img
+                src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png "
+                alt=" no videos"
+                className="failure-image"
+              />
+              <h1>No Search Results Found</h1>
+              <p>Try different key words or remove search filter </p>
+              <button
+                onClick={this.retryButtonClicked}
+                type="button"
+                className="retry-button"
+              >
+                Retry
+              </button>
+            </div>
+          )
+        }
         return (
           <ul className="unordered-list-container-for-videos">
             {searchResults.map(eachItem => (
@@ -121,14 +146,26 @@ class Home extends Component {
     }
   }
 
+  closeButtonClicked = () => {
+    this.setState({shouldShowBanner: false})
+  }
+
   render() {
-    const {searchInput} = this.state
+    const {searchInput, shouldShowBanner} = this.state
+
     return (
       <ThemeContext.Consumer>
         {value => {
           const {activeTheme} = value
+          const isDark = activeTheme === 'Dark'
+          const imageUrl = isDark
+            ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+            : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
           return (
-            <StyledHomeMainContainer backGroundColor={activeTheme === 'Dark'}>
+            <StyledHomeMainContainerForHome
+              data-testid="home"
+              backGroundColor={activeTheme === 'Dark'}
+            >
               <Header />
               <div className="main-home-container">
                 <StyledHomeLeftContainer
@@ -138,6 +175,31 @@ class Home extends Component {
                   <Blocks />
                 </StyledHomeLeftContainer>
                 <StyledHomeRightContainer>
+                  {shouldShowBanner && (
+                    <StyledBannerContainer
+                      data-testid="banner"
+                      className="banner-background-image"
+                    >
+                      <div className="close-banner-container">
+                        <img
+                          src={imageUrl}
+                          alt="nxt watch logo"
+                          className="website-logo-image"
+                        />
+                        <button
+                          className="banner-close-button"
+                          label="close-banner"
+                          type="button"
+                          onClick={this.closeButtonClicked}
+                          data-testid="close"
+                        >
+                          <IoIosClose style={{height: '25px', width: '25px'}} />
+                        </button>
+                      </div>
+                      <p>Buy Nxt Watch Premium Prepaid plans with UPI</p>
+                      <button type="button">GET IT NOW</button>
+                    </StyledBannerContainer>
+                  )}
                   <div className="search-container">
                     <input
                       type="search"
@@ -150,7 +212,7 @@ class Home extends Component {
                       type="button"
                       onClick={this.searchButtonClicked}
                       className="search-button"
-                      data-testid="search"
+                      data-testid="searchButton"
                       label="search"
                     >
                       <FaSearch
@@ -164,7 +226,7 @@ class Home extends Component {
                   </div>
                 </StyledHomeRightContainer>
               </div>
-            </StyledHomeMainContainer>
+            </StyledHomeMainContainerForHome>
           )
         }}
       </ThemeContext.Consumer>

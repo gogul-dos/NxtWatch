@@ -1,10 +1,9 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {FaFire} from 'react-icons/fa'
-import TrendingVideoCard from '../TrendingVideoCard'
 import Header from '../Header'
 import Blocks from '../Blocks'
+import VideoPlayerDetails from '../VideoPlayerDetails'
 import {
   StyledHomeLeftContainer,
   StyledHomeMainContainer,
@@ -12,7 +11,7 @@ import {
 import ThemeContext from '../ReactContexts'
 import './index.css'
 
-class Trending extends Component {
+class Video extends Component {
   requestStatus = {
     progress: 'IN_PROGRESS',
     success: 'SUCCESS',
@@ -29,8 +28,12 @@ class Trending extends Component {
   }
 
   getResults = async () => {
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+    console.log(id)
     this.setState({urlStatus: this.requestStatus.progress})
-    const url = `https://apis.ccbp.in/videos/trending`
+    const url = `https://apis.ccbp.in/videos/${id}`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       method: 'GET',
@@ -39,29 +42,32 @@ class Trending extends Component {
     const response = await fetch(url, options)
     const data = await response.json()
     if (response.ok === true) {
-      const formattedData = data.videos.map(eachVideo => ({
-        id: eachVideo.id,
-        publishedAt: eachVideo.published_at,
-        thumbnailUrl: eachVideo.thumbnail_url,
-        title: eachVideo.title,
-        viewCount: eachVideo.view_count,
-        channel: eachVideo.channel,
-      }))
       this.setState({
-        searchResults: formattedData,
+        searchResults: data.video_details,
         urlStatus: this.requestStatus.success,
       })
-      console.log(data)
+      console.log(data.video_details)
     } else {
       this.setState({urlStatus: this.requestStatus.failure})
     }
   }
 
-  retryButtonClicked = () => [this.getResults()]
+  retryButtonClicked = () => {
+    this.getResults()
+  }
 
-  getCurrentView = activeTheme => {
+  getCurrentView = (
+    activeTheme,
+    textColor1,
+    paraColor,
+    backgroundColor,
+    saveToVideos,
+    savedVideos,
+  ) => {
     const {urlStatus, searchResults} = this.state
-    console.log(searchResults)
+    const publishedAt = searchResults
+    console.log('publishedAt', publishedAt) //
+
     let color
     let isDark
     let backGroundColor
@@ -86,9 +92,12 @@ class Trending extends Component {
         )
       case this.requestStatus.failure:
         return (
-          <div style={{color}} className="failure-container">
+          <div
+            style={{color, backgroundColor: backGroundColor}}
+            className="failure-container"
+          >
             <img src={imageUrl} className="failure-image" alt="failure view" />
-            <h1>Oops! Something Went Wrong</h1>
+            <h1 style={{color: textColor1}}>Oops! Something Went Wrong</h1>
             <p>
               We are having some trouble to complete your request. Please try
               again.
@@ -104,24 +113,14 @@ class Trending extends Component {
         )
       case this.requestStatus.success:
         return (
-          <>
-            <div className="trending-success-container">
-              <div className="trending-heading-container">
-                <div
-                  className="icon-container"
-                  style={{backgroundColor: backGroundColor}}
-                >
-                  <FaFire color="red" height="25px" width="25px" />
-                </div>
-                <h1 style={{color}}>Trending</h1>
-              </div>
-            </div>
-            <ul className="unordered-list-container-for-trending">
-              {searchResults.map(eachItem => (
-                <TrendingVideoCard key={eachItem.id} details={eachItem} />
-              ))}
-            </ul>
-          </>
+          <div className="video-player-main-container">
+            <VideoPlayerDetails
+              searchResults={searchResults}
+              activeTheme={activeTheme}
+              saveToVideos={saveToVideos}
+              savedVideos={savedVideos}
+            />
+          </div>
         )
       default:
         return null
@@ -132,10 +131,13 @@ class Trending extends Component {
     return (
       <ThemeContext.Consumer>
         {value => {
-          const {activeTheme} = value
+          const {activeTheme, saveToVideos, savedVideos} = value
+          const textColor1 = activeTheme === 'Dark' ? '#ffffff' : '#000000'
+          const paraColor = activeTheme === 'Dark' ? '#cbd5e1' : '#475569'
+          const backgroundColor = activeTheme === 'Dark' ? '#000000' : '#f1f1f1'
           return (
             <StyledHomeMainContainer
-              data-testid="trending"
+              data-testid="videoItemDetails"
               backGroundColor={activeTheme === 'Dark'}
             >
               <Header />
@@ -146,7 +148,14 @@ class Trending extends Component {
                   <Blocks />
                 </StyledHomeLeftContainer>
                 <div className="main-content-container">
-                  {this.getCurrentView(activeTheme)}
+                  {this.getCurrentView(
+                    activeTheme,
+                    textColor1,
+                    paraColor,
+                    backgroundColor,
+                    saveToVideos,
+                    savedVideos,
+                  )}
                 </div>
               </div>
             </StyledHomeMainContainer>
@@ -157,4 +166,4 @@ class Trending extends Component {
   }
 }
 
-export default Trending
+export default Video
