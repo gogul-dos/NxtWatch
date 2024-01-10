@@ -16,4 +16,49 @@ export const StyledLoginSubComponent = styled.div`
   p {
     color: red;
   }
+  button {
+    color: #ffffff;
+  }
+`
+export const StyledNavbarButtonLogout = styled.button`
+  background-color: transparent;
+  outline: none;
+  color: ${props => (props.color === 'Dark' ? '#ffffff' : '#000000')};
+  font-size: 15px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: ${props => (props.color === 'Dark' ? '#f9f9f9' : '#000000')};
+  border-radius: 10px;
+  padding: 10px;
+`
+export const StyledHomeMainContainer = styled.div`
+  background-color: ${props => (props.backGroundColor ? '#181818' : '#f9f9f9')};
+
+  min-height: 100vh;
+  max-height: 100%;
+`
+export const StyledActiveBlock = styled.button`
+  background-color: ${props => (props.isActive ? '#94a3b8' : 'transparent')};
+  outline: none;
+  color: ${props => (props.backGroundColor ? '#ffffff' : '#000000')};
+  border-width: 0;
+  text-decoration: none;
+`
+
+export const StyledHomeLeftContainer = styled.div`
+  width: 15%;
+  background-color: ${props => (props.backGroundColor ? '#0f0f0f' : '#ebebeb')};
+  min-height: 100vh;
+  max-height: 100%;
+`
+export const StyledNavbarContainer = styled.nav`
+  background-color: ${props => (props.backGroundColor ? '#0f0f0f' : '#ebebeb')};
+`
+
+export const StyledHomeRightContainer = styled.div`
+  padding: 25px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `

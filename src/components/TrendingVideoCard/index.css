@@ -1,0 +1,10 @@
+.trending-video-container {
+  display: flex;
+}
+.thumbnail-image-for-trending {
+  height: 200px;
+  width: auto;
+}
+.list-item-for-trending {
+  margin: 20px;
+}

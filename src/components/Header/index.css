@@ -1,0 +1,24 @@
+.navbar-unordered-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  list-style: none;
+}
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.profile-image {
+  height: 35px;
+  width: 35px;
+}
+.for-margin {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.theme-mode-button {
+  border-width: 0;
+  background-color: transparent;
+  outline: none;
+}

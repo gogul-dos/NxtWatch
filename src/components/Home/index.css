@@ -1,0 +1,76 @@
+.Link-container {
+  text-decoration: none;
+  width: 100%;
+}
+.block-unordered-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.list-item-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.blocks-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.main-home-container {
+  display: flex;
+}
+.input-element {
+  width: 250px;
+  height: 30px;
+  margin-top: 10px;
+}
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+}
+.search-button {
+  background-color: transparent;
+  outline: none;
+  border-width: 0;
+}
+.color-for-loader {
+  color: #2c79f5;
+}
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 70%;
+}
+.main-content-container {
+  height: 100%;
+  width: 100%;
+}
+.failure-image {
+  height: 250px;
+  width: auto;
+}
+.retry-button {
+  background-color: #00306e;
+  color: #ffffff;
+  padding: 7px;
+  border-radius: 5px;
+  border-width: 0;
+}
+.failure-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

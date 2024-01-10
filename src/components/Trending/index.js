@@ -1,20 +1,18 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {FaSearch} from 'react-icons/fa'
-import ThemeContext from '../ReactContexts'
-import {
-  StyledHomeMainContainer,
-  StyledHomeLeftContainer,
-  StyledHomeRightContainer,
-} from '../../StyledComponents'
+import {FaFire} from 'react-icons/fa'
+import TrendingVideoCard from '../TrendingVideoCard'
 import Header from '../Header'
 import Blocks from '../Blocks'
-import VideoCard from '../VideoCard'
+import {
+  StyledHomeLeftContainer,
+  StyledHomeMainContainer,
+} from '../../StyledComponents'
+import ThemeContext from '../ReactContexts'
 import './index.css'
 
-class Home extends Component {
+class Trending extends Component {
   requestStatus = {
     progress: 'IN_PROGRESS',
     success: 'SUCCESS',
@@ -22,7 +20,6 @@ class Home extends Component {
   }
 
   state = {
-    searchInput: '',
     searchResults: [],
     urlStatus: this.requestStatus.progress,
   }
@@ -33,8 +30,7 @@ class Home extends Component {
 
   getResults = async () => {
     this.setState({urlStatus: this.requestStatus.progress})
-    const {searchInput} = this.state
-    const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
+    const url = `https://apis.ccbp.in/videos/trending`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       method: 'GET',
@@ -61,14 +57,6 @@ class Home extends Component {
     }
   }
 
-  searchInputChanged = event => {
-    this.setState({searchInput: event.target.value})
-  }
-
-  searchButtonClicked = () => {
-    this.getResults()
-  }
-
   retryButtonClicked = () => [this.getResults()]
 
   getCurrentView = activeTheme => {
@@ -76,11 +64,14 @@ class Home extends Component {
     console.log(searchResults)
     let color
     let isDark
+    let backGroundColor
     if (activeTheme === 'Dark') {
       color = '#ffffff'
+      backGroundColor = '#ebebeb'
       isDark = true
     } else {
       color = '#000000'
+      backGroundColor = '#0f0f0f'
       isDark = false
     }
     const imageUrl = isDark
@@ -110,11 +101,24 @@ class Home extends Component {
         )
       case this.requestStatus.success:
         return (
-          <ul className="unordered-list-container-for-videos">
-            {searchResults.map(eachItem => (
-              <VideoCard key={eachItem.id} details={eachItem} />
-            ))}
-          </ul>
+          <>
+            <div className="trending-success-container">
+              <div className="trending-heading-container">
+                <div
+                  className="icon-container"
+                  style={{backgroundColor: backGroundColor}}
+                >
+                  <FaFire color="red" height="25px" width="25px" />
+                </div>
+                <h1 style={{color}}>Trending</h1>
+              </div>
+            </div>
+            <ul className="unordered-list-container-for-trending">
+              {searchResults.map(eachItem => (
+                <TrendingVideoCard key={eachItem.id} details={eachItem} />
+              ))}
+            </ul>
+          </>
         )
       default:
         return null
@@ -122,7 +126,6 @@ class Home extends Component {
   }
 
   render() {
-    const {searchInput} = this.state
     return (
       <ThemeContext.Consumer>
         {value => {
@@ -130,39 +133,15 @@ class Home extends Component {
           return (
             <StyledHomeMainContainer backGroundColor={activeTheme === 'Dark'}>
               <Header />
-              <div className="main-home-container">
+              <div className="trending-main-container">
                 <StyledHomeLeftContainer
                   backGroundColor={activeTheme === 'Dark'}
-                  className="home-left-container"
                 >
                   <Blocks />
                 </StyledHomeLeftContainer>
-                <StyledHomeRightContainer>
-                  <div className="search-container">
-                    <input
-                      type="search"
-                      value={searchInput}
-                      onChange={this.searchInputChanged}
-                      className="input-element"
-                      placeholder="Search"
-                    />
-                    <button
-                      type="button"
-                      onClick={this.searchButtonClicked}
-                      className="search-button"
-                      data-testid="search"
-                      label="search"
-                    >
-                      <FaSearch
-                        color={activeTheme === 'Dark' ? '#ffffff' : '#000000'}
-                        style={{height: '25px', width: '25px'}}
-                      />
-                    </button>
-                  </div>
-                  <div className="main-content-container">
-                    {this.getCurrentView(activeTheme)}
-                  </div>
-                </StyledHomeRightContainer>
+                <div className="main-content-container">
+                  {this.getCurrentView(activeTheme)}
+                </div>
               </div>
             </StyledHomeMainContainer>
           )
@@ -171,4 +150,5 @@ class Home extends Component {
     )
   }
 }
-export default Home
+
+export default Trending

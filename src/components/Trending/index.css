@@ -1,0 +1,21 @@
+.trending-main-container {
+  display: flex;
+}
+.trending-success-container {
+  padding: 50px;
+}
+.trending-heading-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.icon-container {
+  background-color: #000000;
+  padding: 25px;
+  border-radius: 50%;
+}
+.unordered-list-container-for-trending {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}

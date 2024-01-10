@@ -1,0 +1,35 @@
+.thumbnail-image {
+  width: 100%;
+  height: auto;
+}
+.list-item-container {
+  width: 25%;
+  text-decoration: none;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin: 20px;
+}
+.views-container {
+  display: flex;
+  align-items: center;
+}
+.channel-logo {
+  height: 25px;
+  width: 25px;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+.video-details-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin: 20px;
+}
+.unordered-list-container-for-videos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  list-style: none;
+  width: 100%;
+}
